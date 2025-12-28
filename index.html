@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">    
+  </head>
+  <body>
+<style>
+</style>
+
+
+<div id="container">
+ <div class="ball" id="ball"></div>
+<audio id="popSound" src="pop.mp3" preload="auto"></audio>
+    </div>
+<script>
+const container=document.getElementById("container")
+const popSound=document.getElementById("popSound")
+const ball = document.getElementById('ball');
+
+let speed=Math.floor(Math.random()*10)*0.1;
+let colors=["red","green","blue","orange","pink","purple","brown","cyan",
+"aqua","lime","olive","navy","maroon","indigo","violet","lavender","magenta","gold","silver","beige","tan","khaki","sienna","chocolate","salmon","mint","turquoise","amber","crimson","slategray","lightgray","darkgray","black","white"];
+
+function randomColor(colors){
+let randomIndex=Math.floor(Math.random()*colors.length);
+return colors[randomIndex];
+}
+
+let color=setInterval(() => {
+randomColor(colors);},speed);
+
+function createBall(initPosX,initPosY){
+
+const ball=document.createElement("div");
+ball.className="ball";
+ball.style.backgroundColor=randomColor(colors)
+ball.style.transform = `translate(${initPosX}px, ${initPosY}px)`;
+container.appendChild(ball);
+
+let posX=initPosX;
+let posY=initPosY;
+let speed=Math.random()*2+1;
+ball.addEventListener("click",()=>{
+popSound.currentTime=0;
+popSound.play();
+ball.remove()
+balls()
+})
+
+function moveBall() {
+posY+=speed
+ball.style.transform =`translate(${posX}px, ${posY}px)`;
+
+if(posY>window.innerHeight){
+posY=-50;
+posX=Math.floor(Math.random()*(container.clientWidth-50));
+ball.style.backgroundColor=randomColor(colors)
+ball.style.transform =`translate(${posX}px, ${posY}px)`;
+
+
+}
+ }
+setInterval(moveBall,10)
+}
+
+
+
+
+
+
+
+function createBallRevers(initPosX,initPosY){
+initPosX=Math.floor(Math.random()*400)
+const ball=document.createElement("div");
+ball.className="ball";
+ball.style.backgroundColor=randomColor(colors)
+ball.style.transform = `translate(${initPosX}px, ${initPosY}px)`;
+container.appendChild(ball);
+
+let posX=initPosX
+let posY=initPosY
+let speed=Math.random()*2+1
+ball.addEventListener("click",()=>{
+popSound.currentTime=0;
+popSound.play();
+ball.remove()
+ballsRevers()
+})
+
+function moveBall() {
+posY-=speed
+ball.style.transform =`translate(${posX}px, ${posY}px)`;
+
+if(posY<-50){
+posY=window.innerHeight;
+posX=Math.floor(Math.random()*(container.clientWidth-50));
+ball.style.backgroundColor=randomColor(colors)
+ball.style.transform =`translate(${posX}px, ${posY}px)`;
+
+}
+ }
+setInterval(moveBall,10)
+}
+
+function ballsRevers(){
+createBallRevers(Math.floor(Math.random()*(container.clientWidth - 50)), window.innerHeight);
+}
+
+function balls(){
+createBall(Math.floor(Math.random()*(container.clientWidth - 50)), 0);
+}
+for (let i = 0; i < 2; i++) {
+            createBall(Math.floor(Math.random()*(container.clientWidth - 50)), 0); 
+
+ 
+
+createBallRevers(Math.floor(Math.random()*(container.clientWidth - 50)), window.innerHeight); 
+
+        }
+
+
+/*createBall(100,0)
+createBallrevers(0,700)
+createBall(300,0)*/
+
+    </script>
+
+
+  </body>
+</html>
